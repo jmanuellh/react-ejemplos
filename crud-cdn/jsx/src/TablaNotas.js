@@ -15,7 +15,9 @@ export default class TablaNotas extends React.Component {
     }
 
     cambioFormNota = (event) => {
+      // Using spread syntax
       this.setState(prevState => ({nota: {...prevState.nota, [event.target.name]: event.target.value}}));
+      // this.setState(nota => ({nota: {...nota, [event.target.name]: event.target.value}}));
     }
 
     obtenerNotas() {
