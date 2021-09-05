@@ -1,5 +1,3 @@
-
-
 const e = React.createElement;
 
 export default class TablaNotas extends React.Component {
@@ -15,7 +13,7 @@ export default class TablaNotas extends React.Component {
     }
 
     cambioFormNota = (event) => {
-      // Using spread syntax
+      // Using spread syntax ...
       this.setState(prevState => ({nota: {...prevState.nota, [event.target.name]: event.target.value}}));
       // this.setState(nota => ({nota: {...nota, [event.target.name]: event.target.value}}));
     }
@@ -33,8 +31,13 @@ export default class TablaNotas extends React.Component {
 
     agregarNota() {
     const nota = this.state.nota;
-
       axios.post("https://erpbackaspnetcore31.azurewebsites.net/api/notas", this.state.nota).then(() => {
+        this.obtenerNotas();
+      });
+    }
+
+    eliminarNota(id) {
+      axios.delete("https://erpbackaspnetcore31.azurewebsites.net/api/notas/"+id).then(() => {
         this.obtenerNotas();
       });
     }
@@ -54,6 +57,7 @@ export default class TablaNotas extends React.Component {
                 <thead>
                   <tr>
                     <th>Titulo</th>
+                    <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -62,6 +66,7 @@ export default class TablaNotas extends React.Component {
                       <td>
                         {nota.titulo}
                       </td>
+                      <td><button onClick={() => this.eliminarNota(nota.id)}>Eliminar</button></td>
                     </tr>
                   ))}
                 </tbody>
